@@ -2,7 +2,7 @@
 #include "textures.hpp"
 #include "plants.hpp"
 #include "zombies.hpp"
-
+#include "Fonts.hpp"
 //#include <time.h>   
 
 using namespace Tyra;
@@ -627,8 +627,8 @@ void Game_state::loop(){
     //renderer.renderer2D.render(spr_textFont);
 
     //printf("size GOM: %d\n",GOmanager.Size());
-    
-  
+    std::string texto = "hola mundo"; 
+    DrawText(texto,50,50);
     //utilityTools.drawLine(Vec4(50.0F, 50.0F, 50.0F),Vec4(0.0F, 0.0F, 0.0F),Color(0.0F, 128.0F, 0.0F));
     //utilityTools.drawBox(box, size, Color(0.0F, 0.0F, 255.0F));
     /** End frame will perform vsync. */

@@ -4,11 +4,10 @@
 #include "textures.hpp"
 #include "gameObject.hpp"
 
-extern Tyra::Sprite spr_textFont;
+
 extern Tyra::Sprite spr_box_collider;
 
 bool Load_sprite_box_collider(Tyra::Engine* engine);
-bool Load_sprite_text_font(Tyra::Engine* engine);
 bool ColliderCollision(Tyra::Sprite col1, Tyra::Sprite col2);
 
 //  Color meaning

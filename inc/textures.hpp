@@ -7,6 +7,7 @@ enum SpritesTextures { PeaShooterSingle };
 
 extern std::vector<Tyra::Sprite*> spr_PeaShooterSingle;
 
+void LoadSprite (Tyra::Sprite* sprite, Tyra::Vec2 newPos, Tyra::Vec2 newSize, Tyra::SpriteMode mode);
 void LoadSprite (Tyra::Sprite* sprite, Tyra::Vec2 newPos, Tyra::Vec2 newSize);
 void LoadSprite (Tyra::Sprite* sprite);
 void LoadSprite (Tyra::Sprite* sprite, Tyra::Vec2 newPosition);

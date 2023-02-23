@@ -1,4 +1,5 @@
 #include "gameManager.hpp"
+#include "Fonts.hpp"
 #include "miscellaneous.hpp"
 
 Tyra::Engine* engine;

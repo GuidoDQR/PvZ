@@ -1,6 +1,6 @@
 #include "miscellaneous.hpp"
 
-Tyra::Sprite spr_textFont;
+
 Tyra::Sprite spr_box_collider;
 
 bool Load_sprite_box_collider(Tyra::Engine* engine){
@@ -11,19 +11,6 @@ bool Load_sprite_box_collider(Tyra::Engine* engine){
     }
 
     LoadTexture(&spr_box_collider,"asset_box.png",engine);
-    return true;
-} 
-
-bool Load_sprite_text_font(Tyra::Engine* engine){
-    LoadSprite(&spr_textFont,Tyra::Vec2(0,0),Tyra::Vec2(10,17));
-    spr_textFont.mode = Tyra::SpriteMode::MODE_REPEAT;
-
-    if(spr_textFont.size.x != 10 || spr_textFont.size.y != 17){
-        TYRA_WARN("ERROR SPRITE TEXT NOT LOADED");
-        return false;
-    }
-
-    LoadTexture(&spr_textFont,"FONTS/_BrianneTod12.png",engine);
     return true;
 } 
 
