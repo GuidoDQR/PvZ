@@ -6,7 +6,7 @@ GameObjectManager GOmanager;
 
 GameObjectManager::GameObjectManager(){}
 
-GameObject::GameObject() : anim(camera.camera[0],&position){
+GameObject::GameObject() : anim(camera.camera[0],&position,&sprite){
     //printf("pos gameobject: %f,%f\n",position.x,position.y);
     position.x = position.y = 0;
     layer = 0;

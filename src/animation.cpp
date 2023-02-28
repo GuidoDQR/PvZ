@@ -33,15 +33,16 @@ Animation::Animation(){
   sprite.clear();
 }
 
-Animation::Animation(Engine* t_engine, Vec2* gameObjectPosition) { 
+Animation::Animation(Engine* t_engine, Vec2* gameObjectPosition, Sprite** gameObjectSprite) { 
   engine          = t_engine;
   frame           = 0;
   firstFrame      = finalFrame = 0;
   firstImageFrame = finalImageFrame = 0;
   timer           = 0;
   seconds         = 0.6f;
-  reverseFrame = stopFrame = stopRender = false;
-  position     = gameObjectPosition;
+  reverseFrame    = stopFrame = stopRender = false;
+  position        = gameObjectPosition;
+  spriteGO        = gameObjectSprite;
   //sprite.resize(0);
   //sprite.assign(0,0);
   //printf("size layer 1: %d\n",totalLayers.size());
@@ -173,9 +174,15 @@ Sprite *Animation::NewSprite(){
   sprite.push_back(new Sprite);
   spriteFrame.push_back(*sprite[sprite.size()-1]);
   layer.push_back(0);
+
+  if(sprite.size() == 1){
+    *spriteGO = sprite[0];
+    /*printf("new size anim: %u\n",sprite.size());
+    printf("id sprite: %u\n",sprite[sprite.size()-1]->id);
+    printf("spriteGO id: %d\n",spriteGO->id);*/
+  }
   //finalFrame = sprite.size();
-  /*printf("new size anim: %u\n",sprite.size());
-  printf("id sprite: %u\n",sprite[sprite.size()-1]->id);*/
+  
   return sprite[sprite.size()-1];
 }
 
@@ -230,6 +237,8 @@ Sprite Animation::LoopAnim(const unsigned int finalFrame, bool stopFrame, bool r
     timerTyra.prime();
 
     spriteFrame[frame].position = sprite[frame]->position + *position;
+
+    *spriteGO = sprite[frame];
     return spriteFrame[frame];
 }
 
@@ -258,6 +267,7 @@ Sprite Animation::LoopAnim(bool stopFrame, bool reverse) {
     spriteFrame[frame] = *sprite[frame];
     spriteFrame[frame].position = sprite[frame]->position + *position;
     //printf("%f,%f\n",spriteFrame[frame].position.x,spriteFrame[frame].position.y );
+    *spriteGO = sprite[frame];
     return spriteFrame[frame];
 }
 

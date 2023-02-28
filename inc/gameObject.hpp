@@ -12,6 +12,7 @@ public:
     Tyra::Vec2 position;   
     Tyra::Vec2 size;    // width and height
     Animation anim;
+    Tyra::Sprite* sprite;
     int layer;
 };
 

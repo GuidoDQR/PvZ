@@ -15,6 +15,7 @@ private:
     Tyra::Engine* engine;
     Tyra::Timer timerTyra;
     Tyra::Vec2* position;    // Posicion del GameObject
+    Tyra::Sprite** spriteGO; // Sprite of GameObject
     
     const char* image;
     float timer; 
@@ -30,7 +31,7 @@ private:
     std::vector<int>           layer;       // capa de renderizado  example: 0-first draw 10-last draw
 public:
     Animation(); 
-    Animation(Tyra::Engine* t_engine, Tyra::Vec2* gameObjectPosition);
+    Animation(Tyra::Engine* t_engine, Tyra::Vec2* gameObjectPosition, Tyra::Sprite** gameObjectSprite);
     ~Animation();
     std::vector<Tyra::Sprite>  spriteFrame; // sprite que sera renderizado 
     bool reverseFrame;

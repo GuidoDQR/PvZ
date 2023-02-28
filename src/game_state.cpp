@@ -23,7 +23,11 @@ void Game_state::init(){
     timer.prime();
 
     LoadSprite(background.anim.NewSprite(), Vec2{-56,-1},Vec2{780,524});
-    LoadTexture(background.anim.GetSprite(0), imageFile, engine);
+    //printf("init backSprite id: %d\n",background.sprite->id);
+    LoadTexture(background.sprite, imageFile, engine);
+
+    //background.sprite->size.x = 100;
+    //background.sprite->size.y = 100;
     //printf("id: %d\n",background.anim.GetSprite(0)->id);
     //printf("pos: %f,%f\n",background.anim.GetSprite(0)->position.x,background.anim.GetSprite(0)->position.y);
     //printf("size: %f,%f\n",background.anim.GetSprite(0)->size.x,background.anim.GetSprite(0)->size.y);
@@ -280,6 +284,12 @@ void Game_state::loop(){
             TYRA_WARN("\nBOX DEBUG MODE DEACTIVATE\n");
           }else if(optiondebug1 == d_map ){
             b_debugMap = !b_debugMap;
+
+            for(int i=0;i<debug_render_size_map_x;i++){
+              for(int j=0;j<debug_render_size_map_y;j++){
+                map[i][j].gameObject.anim.stopRender = !b_debugMap;
+              }
+            }
 
             if(b_debugMap)TYRA_WARN("\nMAP DEBUG MODE ACTIVATE\n");
             else TYRA_WARN("\nMAP DEBUG MODE DEACTIVATE\n");
