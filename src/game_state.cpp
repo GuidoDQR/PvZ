@@ -89,8 +89,10 @@ void Game_state::init(){
         //map[i][j].sprite.color = Color(0,255,0,128);
         //map[i][j].sprite.position = Vec2(posX,posY); // 85,58
         //map[i][j].sprite.size = Vec2(45,72);
-        map[i][j].gameObject.anim.SetPositionFrameBySpriteSize(0,Vec2(posX,posY));
-        map[i][j].gameObject.anim.GetSprite(0)->size = Vec2(45,72);
+        //map[i][j].gameObject.anim.SetPositionFrameBySpriteSize(0,Vec2(posX,posY));
+        //map[i][j].gameObject.anim.GetSprite(0)->size = Vec2(45,72);
+        map[i][j].collider->position = Vec2(posX,posY);
+        map[i][j].collider->size = Vec2(45,72);
         mapHasPlant[i][j] = false;
         posX += 45;
       }

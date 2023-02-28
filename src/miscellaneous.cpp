@@ -38,7 +38,8 @@ Map::Map(){
     gameObject.anim.NewSprite();
     gameObject.anim.stopRender = true;
     Tyra::Sprite* newSprite = gameObject.anim.GetSprite(0);
-    *newSprite = collider.sprite;
+    *newSprite = box.sprite;
+    collider = newSprite;
     /*printf("map id sprite: %u\n",collider.sprite.id);
     printf("new map id sprite: %u\n",newSprite->id);
     printf("GO sprite ID: %u\n",gameObject.anim.GetFrame(0)->id);

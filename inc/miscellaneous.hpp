@@ -26,9 +26,10 @@ class Box_collider{
 
 class Map{
 
+    Box_collider box;
     public:
     Map();
     GameObject gameObject;
-    Box_collider collider;
+    Tyra::Sprite* collider;
     Tyra::Vec2 center;
 };
