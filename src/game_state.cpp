@@ -25,8 +25,8 @@ void Game_state::init(){
     LoadSprite(background.anim.NewSprite(), Vec2{-56,-1},Vec2{780,524});
     LoadTexture(background.anim.GetSprite(0), imageFile, engine);
     //printf("id: %d\n",background.anim.GetSprite(0)->id);
-    printf("pos: %f,%f\n",background.anim.GetSprite(0)->position.x,background.anim.GetSprite(0)->position.y);
-    printf("size: %f,%f\n",background.anim.GetSprite(0)->size.x,background.anim.GetSprite(0)->size.y);
+    //printf("pos: %f,%f\n",background.anim.GetSprite(0)->position.x,background.anim.GetSprite(0)->position.y);
+    //printf("size: %f,%f\n",background.anim.GetSprite(0)->size.x,background.anim.GetSprite(0)->size.y);
    
     //printf("textures count: %u\n", engine->renderer.getTextureRepository().getTexturesCount());
 
@@ -159,9 +159,10 @@ void Game_state::init(){
     solSpriteText.rec.width = 26;
     solSpriteText.rec.height = 26;
 
-    char *solesText; // Texto de la cantidad de soles
+    //char *solesText; // Texto de la cantidad de soles
     //sprintf(solesText, "%d", soles); // convierte el int a string    
 
+    solesText = std::to_string(soles);
     initialized = true;
 
     //debug
@@ -171,10 +172,16 @@ void Game_state::init(){
     //size = 0.2f;
     // Debug sprites
     LoadSprite(&debug_sprite, Vec2{0,0},Vec2{256,128});
-    box_col.sprite.position = Vec2(85,58);
-    box_col.sprite.size = Vec2(45,72);
+
+    //box_col.gameObject.position = Vec2(85,58);
+    //box_col.gameObject.size = Vec2(45,72);
     //loadTexture(engine,&debug_sprite,"Animations/PeaShooterSingle/0001.png");
-    LoadTexture(&debug_sprite,"cursor6.png",engine);
+    //LoadTexture(&debug_sprite,"cursor6.png",engine);
+    
+    box_col.gameObject.position = Vec2(0,0);
+    box_col.collider->size.x = 45;
+    box_col.collider->size.y = 72;
+
 }
 
 void Game_state::loop(){
@@ -211,28 +218,48 @@ void Game_state::loop(){
           
           timer.prime();
         }
+      } 
 
         // Cross options
         if(pad1->getClicked().Cross){
-          if(optiondebug1 == d_sprite && !b_debugSprite){    
-            b_debugSprite = true;  
 
-            TYRA_WARN("\nSPRITE DEBUG MODE ACTIVATE\n");    
-          }else if(optiondebug1 == d_hidebackground){
+          switch (optiondebug1){
+          case d_sprite:
+            if(!b_debugSprite){
+              b_debugSprite = true;  
+              TYRA_WARN("\nSPRITE DEBUG MODE ACTIVATE\n"); 
+            }
+            break;
+          case d_hidebackground:
             background.anim.stopRender = !background.anim.stopRender;
 
             if(background.anim.stopRender) TYRA_WARN("\nHIDE BACKGROUND ACTIVATE\n");     
-            else{ TYRA_WARN("\nHIDE BACKGROUND DEACTIVATE\n"); ShowDebugOptions();}        
-          }else if(optiondebug1 == d_box && !b_debugBox){
-            b_debugBox = true;
-            TYRA_WARN("\nBOX DEBUG MODE ACTIVATE\n");
-          }else if(optiondebug1 == d_map){
+            else{ TYRA_WARN("\nHIDE BACKGROUND DEACTIVATE\n"); ShowDebugOptions();}   
+            break;
+          case d_box:
+            if(!b_debugBox){
+              b_debugBox = true;
+              box_col.gameObject.anim.stopRender = false;
+              printf("GO stopRender: %d\n",box_col.gameObject.anim.stopRender);
+              TYRA_WARN("\nBOX DEBUG MODE ACTIVATE\n");
+            }
+            break;
+          case d_map:
             b_debugMap = !b_debugMap;
 
-            if(b_debugMap)TYRA_WARN("\nMAP DEBUG MODE ACTIVATE\n");
+            for(int i=0;i<debug_render_size_map_x;i++){
+              for(int j=0;j<debug_render_size_map_y;j++){
+                map[i][j].gameObject.anim.stopRender = !b_debugMap;
+              }
+            }
+
+            if(b_debugMap){TYRA_WARN("\nMAP DEBUG MODE ACTIVATE\n");}
             else{ TYRA_WARN("\nMAP DEBUG MODE DEACTIVATE\n"); ShowDebugOptions();}
-     
+            break;
+          default:
+            break;
           }
+          
         }
         
         // Circle options
@@ -246,6 +273,8 @@ void Game_state::loop(){
             TYRA_WARN("\nHIDE BACKGROUND DEACTIVATE\n"); 
           }else if(optiondebug1 == d_box && b_debugBox){
             b_debugBox = false;
+            box_col.gameObject.anim.stopRender = true;
+            printf("GO stopRender: %d\n",box_col.gameObject.anim.stopRender);
             TYRA_WARN("\nBOX DEBUG MODE DEACTIVATE\n");
           }else if(optiondebug1 == d_map ){
             b_debugMap = !b_debugMap;
@@ -333,59 +362,59 @@ void Game_state::loop(){
           // se usa para cambiar el tamaño y posicion del box para probar
 
           if(pad1->getLeftJoyPad().v <= 100 ){
-            box_col.sprite.position.y -= 1.0F;
-            printf("position: (%f,%f)\n",box_col.sprite.position.x,box_col.sprite.position.y);
+            box_col.gameObject.position.y -= 1.0F;
+            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
             timer.prime();
           }else if(pad1->getLeftJoyPad().v >= 200 ){
-            box_col.sprite.position.y += 1.0F;
-            printf("position: (%f,%f)\n",box_col.sprite.position.x,box_col.sprite.position.y);
+            box_col.gameObject.position.y += 1.0F;
+            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
             timer.prime();
           }
 
           if(pad1->getLeftJoyPad().h <= 100 ){
-            box_col.sprite.position.x -= 1.0F;
-            printf("position: (%f,%f)\n",box_col.sprite.position.x,box_col.sprite.position.y);
+            box_col.gameObject.position.x -= 1.0F;
+            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
             timer.prime();
           }else if(pad1->getLeftJoyPad().h >= 200 ){
-            box_col.sprite.position.x += 1.0F;
-            printf("position: (%f,%f)\n",box_col.sprite.position.x,box_col.sprite.position.y);
+            box_col.gameObject.position.x += 1.0F;
+            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
             timer.prime();
           }
           
           if(pad1->getRightJoyPad().v <= 100){
-            box_col.sprite.size.y -= 1.0f;
-            printf("size: (%f,%f)\n",box_col.sprite.size.x,box_col.sprite.size.y);
+            box_col.collider->size.y -= 1.0f;
+            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
             timer.prime();
           }else if(pad1->getRightJoyPad().v >= 200 ){
-            box_col.sprite.size.y += 1.0f;
-            printf("size: (%f,%f)\n",box_col.sprite.size.x,box_col.sprite.size.y);
+            box_col.collider->size.y += 1.0f;
+            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
             timer.prime();
           }
 
           if(pad1->getRightJoyPad().h >= 200 ){
-            box_col.sprite.size.x += 1.0f;
-            printf("size: (%f,%f)\n",box_col.sprite.size.x,box_col.sprite.size.y);
+            box_col.collider->size.x += 1.0f;
+            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
             timer.prime();
           }else if(pad1->getRightJoyPad().h <= 100 ){
-            box_col.sprite.size.x -= 1.0f;
-            printf("size: (%f,%f)\n",box_col.sprite.size.x,box_col.sprite.size.y);
+            box_col.collider->size.x -= 1.0f;
+            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
             timer.prime();
           }
 
           if(pad1->getPressed().Triangle){
-            box_col.sprite.size += Vec2(1.0F, 1.0F);
-            printf("size: (%f,%f)\n",box_col.sprite.size.x, box_col.sprite.size.y);
+            box_col.collider->size += Vec2(1.0F, 1.0F);
+            printf("size: (%f,%f)\n",box_col.collider->size.x, box_col.collider->size.y);
             timer.prime();
           }else if(pad1->getPressed().Square){
-            box_col.sprite.size -= Vec2(1.0F, 1.0F);
-            printf("size: (%f,%f)\n",box_col.sprite.size.x, box_col.sprite.size.y);
+            box_col.collider->size -= Vec2(1.0F, 1.0F);
+            printf("size: (%f,%f)\n",box_col.collider->size.x, box_col.collider->size.y);
             timer.prime();
           }
         }
       }
 
       
-    }   
+      
 
 
     //if(timer.getTimeDelta()> 1000){ // sin esto es dependiente del framerate, pero ahora anda mas fluido 
@@ -466,40 +495,6 @@ void Game_state::loop(){
             cursorPlayer.gameObject.position = colPos - colSize/2;
           }
           
-          /*if(colPos.x < (map[0][0].sprite.position.x - colSize.x/2)){
-            cursorPlayer.collider[0].sprite.position.x = map[0][0].sprite.position.x  - colSize.x/2;
-
-            //cursorPlayer.sprite.position = cursorPlayer.collider[0].sprite.position - colSize/2;
-            cursorPlayer.gameObject.position = cursorPlayer.collider[0].sprite.position - colSize/2;
-          }else if(colPos.x> map[0][size_map_y-1].sprite.position.x + map[0][size_map_y-1].sprite.size.x - (colSize.x/2)){
-            cursorPlayer.collider[0].sprite.position.x = map[0][size_map_y-1].sprite.position.x + map[0][size_map_y-1].sprite.size.x - (colSize.x/2);
-
-            //cursorPlayer.sprite.position = colPos - colSize/2;
-            cursorPlayer.gameObject.position = colPos - colSize/2;
-             
-            //printf("cursor collider pos: (%f,%f)\n",cursorPlayer.collider.sprite.position.x,cursorPlayer.collider.sprite.position.y);
-            //printf("map[%d][%d] pos: %f,%f\n",0,size_map_y-1,map[0][size_map_y-1].sprite.position.x, map[0][size_map_y-1].sprite.position.y );
-            //printf("map[%d][%d] size: %f,%f\n",0,size_map_y-1,map[0][size_map_y-1].sprite.size.x, map[0][size_map_y-1].sprite.size.y );
-            //printf("cursor size: (%f,%f)\n",cursorPlayer.sprite.size.x,cursorPlayer.sprite.size.y);
-          }
-
-          if(colPos.y < (map[0][0].sprite.position.y - colSize.y/2)){
-            cursorPlayer.collider[0].sprite.position.y = map[0][0].sprite.position.y  - colSize.y/2;
-
-            //cursorPlayer.sprite.position = colPos - colSize/2;
-            cursorPlayer.gameObject.position = colPos - colSize/2;
-          }else if(colPos.y > map[size_map_x-1][0].sprite.position.y + map[size_map_x-1][0].sprite.size.y - (colSize.y/2)){
-            cursorPlayer.collider[0].sprite.position.y = map[size_map_x-1][0].sprite.position.y + map[size_map_x-1][0].sprite.size.y - (colSize.y/2);
-
-            //cursorPlayer.sprite.position = colPos - colSize/2;
-            cursorPlayer.gameObject.position = colPos - colSize/2;
-          }*/
-          
-          //cursorPlayer.collider.sprite.size = cursorPlayer.sprite.size;
-          //printf("cursor position: (%f,%f)\n",cursorPlayer.sprite.position.x,cursorPlayer.sprite.position.y);
-          //printf("cursor position: (%f,%f)\n",cursorPlayer.gameObject.position.x,cursorPlayer.gameObject.position.y);
-          /*printf("speed X: %f\n",speedX);
-          printf("speed Y: %f\n\n",speedY);*/
         }else{ cursorPlayer.isMove = false;}
 
         // CursorPlayer collision with map
@@ -557,38 +552,7 @@ void Game_state::loop(){
             /*printf("esta en el centro\n");
             printf("cursor position: (%f,%f)\n",cursorPlayer.sprite.position.x,cursorPlayer.sprite.position.y);*/
           }
-          
-          //if((cursorPlayer.sprite.position.x - centerMap.x > 0 && cursorPlayer.sprite.position.x - centerMap.x <= 2) || 
-          //   (cursorPlayer.sprite.position.x - centerMap.x < 0 && cursorPlayer.sprite.position.x - centerMap.x >= -2)){
-          //    cursorPlayer.sprite.position.x = centerMap.x;
-          //    cursorPlayer.collider[0].sprite.position.x = centerMap.x  + cursorPlayer.collider[0].sprite.size.x/2 ;
-          //    //printf("\ncentre en X\n");
-          //}else if(cursorPlayer.sprite.position.x> centerMap.x){
-          //  cursorPlayer.sprite.position.x -= 2;
-          //  cursorPlayer.collider[0].sprite.position.x -= 2;
-          //}else if(cursorPlayer.sprite.position.x < centerMap.x){
-          //  cursorPlayer.sprite.position.x += 2;
-          //  cursorPlayer.collider[0].sprite.position.x += 2;
-          //}else 
-//
-          //if((cursorPlayer.sprite.position.y - centerMap.y > 0 && cursorPlayer.sprite.position.y - centerMap.y <= 2) || 
-          //   (cursorPlayer.sprite.position.y - centerMap.y < 0 && cursorPlayer.sprite.position.y - centerMap.y >= -2)){
-          //    cursorPlayer.sprite.position.y = centerMap.y;
-          //    cursorPlayer.collider[0].sprite.position.y = centerMap.y /*+ cursorPlayer.offset.y/2*/ + cursorPlayer.collider[0].sprite.size.y/2;;
-          //    //printf("\ncentre en Y\n");
-          //}else if(cursorPlayer.sprite.position.y > centerMap.y){
-          //  cursorPlayer.sprite.position.y -= 2;
-          //  cursorPlayer.collider[0].sprite.position.y -= 2;
-          //}else if(cursorPlayer.sprite.position.y < centerMap.y){
-          //  cursorPlayer.sprite.position.y += 2;
-          //  cursorPlayer.collider[0].sprite.position.y += 2;
-          //}
-//
-          //if((cursorPlayer.sprite.position.x ) == centerMap.x && (cursorPlayer.sprite.position.y)== centerMap.y){
-          //  cursorPlayer.isCenter = true;
-          //  /*printf("esta en el centro\n");
-          //  printf("cursor position: (%f,%f)\n",cursorPlayer.sprite.position.x,cursorPlayer.sprite.position.y);*/
-          //}
+
         }
     //}
 
@@ -605,30 +569,8 @@ void Game_state::loop(){
     
     // debug ifs
 
-    if(b_debugMap){
-      for(int i=0;i<debug_render_size_map_x;i++){
-      for(int j=0;j<debug_render_size_map_y;j++){
-        map[i][j].gameObject.anim.stopRender = false;
-        }
-      }
-    }
-
-    if(b_debugBox){
-      //renderer.renderer2D.render(box_col.sprite);
-    }
-
-    if(b_debugSprite){
-      //renderer.renderer2D.render(debug_sprite); // Sprite
-    }
-
-    //renderer.renderer2D.render(cursorPlayer.sprite);
-    //renderer.renderer2D.render(cursorPlayer.collider.sprite);
-
-    //renderer.renderer2D.render(spr_textFont);
-
-    //printf("size GOM: %d\n",GOmanager.Size());
     std::string texto = "hola mundo"; 
-    DrawText(texto,50,50);
+    DrawText(solesText,50,50);
     //utilityTools.drawLine(Vec4(50.0F, 50.0F, 50.0F),Vec4(0.0F, 0.0F, 0.0F),Color(0.0F, 128.0F, 0.0F));
     //utilityTools.drawBox(box, size, Color(0.0F, 0.0F, 255.0F));
     /** End frame will perform vsync. */

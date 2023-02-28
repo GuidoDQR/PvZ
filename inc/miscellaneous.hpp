@@ -26,7 +26,6 @@ class Box_collider{
 
 class Map{
 
-    
     public:
     Map();
     GameObject gameObject;

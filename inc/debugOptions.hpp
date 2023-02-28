@@ -1,12 +1,23 @@
 #pragma once
 #include <tyra>
 #include "gameObject.hpp"
-
+#include "miscellaneous.hpp"
 enum debugoptions{
     null, d_sprite, d_box, d_hidebackground,d_map,d_cursorPlayer1,
     d_maxOptions,
     d_firstOption = null+1
 };
+
+class DebugBox{
+private:
+    Box_collider box;
+public:
+    DebugBox();
+    GameObject gameObject;
+    Tyra::Sprite* collider;
+};
+
+//static DebugBox& globalDebugBox() { static DebugBox x; return x;}
 
 void ShowDebugOptions();
 void CrossOptions();
@@ -22,3 +33,4 @@ extern bool b_debugHidebackground;
 extern bool b_debugMap;
 extern bool b_debugCursorPlayer1;
 extern Tyra::Sprite debug_sprite; 
+//extern DebugBox* debug_box_col;

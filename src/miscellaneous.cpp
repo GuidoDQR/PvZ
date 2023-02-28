@@ -1,5 +1,5 @@
 #include "miscellaneous.hpp"
-
+#include "debugOptions.hpp"
 
 Tyra::Sprite spr_box_collider;
 

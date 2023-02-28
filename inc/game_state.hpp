@@ -45,8 +45,10 @@ class Game_state : public Tyra::Game {
 
   int size_map_x;
   int size_map_y;
-  //Box_collider map[10][10];
+  
   Map map[10][10];
+
+  std::string solesText; // Texto de la cantidad de soles
 
   int speedCountX = 0;
   int speedCountY = 0;
@@ -54,7 +56,8 @@ class Game_state : public Tyra::Game {
   float speedY = 1;
   // Debug variables
   //int debugOption = 0;
-  Box_collider box_col;
+  
+  DebugBox box_col;
   Tyra::Vec4 box;  
   Tyra::Vec2 size;
 };
