@@ -1,5 +1,8 @@
 #include "textures.hpp"
+#include <fstream>
+#include <iostream>
 
+using namespace std;
 using namespace Tyra;
 
 std::vector<Sprite*> spr_PeaShooterSingle;
@@ -142,7 +145,7 @@ void LoadTexture(Sprite* sprite, const char* image, Engine* engine) {
    */
  
   auto filepath = FileUtils::fromCwd(image);
-  TYRA_LOG("filepath ", filepath);
+  //TYRA_LOG("filepath ", filepath);
   /**
    * Tyra supports following PNG formats:
    * 32bpp (RGBA)
@@ -154,21 +157,25 @@ void LoadTexture(Sprite* sprite, const char* image, Engine* engine) {
    * All of these formats can be easily exported via GIMP.
    */
   auto* texture = textureRepository.add(filepath);
-  printf("sprite id en texture: %d\n",sprite->id);
+  //printf("sprite id en texture: %d\n",sprite->id);
   /** Let's assign this texture to sprite. */
   texture->addLink(sprite->id);
 
-  TYRA_LOG("Texture loaded!");
+  //TYRA_LOG("Texture loaded!");
 }
 
 
-void LoadPeaShooterSingleSprites(Engine* engine){
-  TYRA_LOG("Setting Image"); 
-  const char* image = "PeaShooterSingle";
+void Load_PeaShooter_Single_Sprites(Engine* engine){
+  //TYRA_LOG("Setting Image"); 
+
+  ifstream positions ("Animations/PeaShooterSingle/positions.txt");
+
+  const char* image = "Animations/PeaShooterSingle/PeaShooterSingle";
   int frame = 0;
   int firstFrame = frame;
   int lastFrame = 104;
   std::string fileString;  
+  Vec2 position;
   for(int i=firstFrame; i<lastFrame; i++){    
         fileString = image; 
         if(i<9){
@@ -185,11 +192,13 @@ void LoadPeaShooterSingleSprites(Engine* engine){
         }
         
         fileString += ".png";
-        TYRA_LOG("Image: ", fileString); 
+        //TYRA_LOG("Image: ", fileString); 
         const char* file = fileString.c_str();
-        TYRA_LOG("Image const char: ", file); 
+        //TYRA_LOG("Image const char: ", file); 
         spr_PeaShooterSingle.push_back(new Sprite);
-        LoadSprite(spr_PeaShooterSingle[i], Vec2(0,0));
+        positions >> position.x ;
+        positions >> position.y ;
+        LoadSprite(spr_PeaShooterSingle[i], position);
         LoadTexture(spr_PeaShooterSingle[i], file, engine);
         fileString.clear();
   }

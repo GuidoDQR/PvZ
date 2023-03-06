@@ -18,7 +18,7 @@ private:
     Tyra::Sprite** spriteGO; // Sprite of GameObject
     
     const char* image;
-    float timer; 
+    int timer; 
     unsigned int frame;       // Frame que se reproduce
     unsigned int firstFrame;  // Primer Frame que se reproduce
     unsigned int finalFrame;  // Ultimo Frame que se reproduce
@@ -41,8 +41,8 @@ public:
     void SetRender(Tyra::Engine* engine);
     void SetPositionGameObject(Tyra::Vec2* position);
     
-    void LoadSprite(int spriteValue);
-    void LoadSprite(int spriteValue,int firstFrame,int finalFrame);
+    void LoadSprite(SpritesTextures spriteValue);
+    void LoadSprite(SpritesTextures spriteValue,int firstFrame,int finalFrame);
     unsigned int SpriteSize(); // function is down
 
     void SetInitialFrame(const unsigned int frame);

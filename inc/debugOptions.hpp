@@ -3,7 +3,7 @@
 #include "gameObject.hpp"
 #include "miscellaneous.hpp"
 enum debugoptions{
-    null, d_sprite, d_box, d_hidebackground,d_map,d_cursorPlayer1,
+    null, d_sprite, d_box, d_hidebackground,d_map,d_cursorPlayer1, d_animation,
     d_maxOptions,
     d_firstOption = null+1
 };

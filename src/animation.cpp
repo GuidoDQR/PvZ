@@ -62,11 +62,11 @@ Animation::~Animation() {
 void Animation::SetRender(Engine* t_engine){ engine = t_engine; }
 
 void Animation::SetPositionGameObject(Vec2* newPos){
-  position = newPos; printf("Position Animation: (%f,%f)\n", position->x , position->y);
+  position = newPos; //printf("Position Animation: (%f,%f)\n", position->x , position->y);
 }
 
 void Animation::SetImagePNG(const char* newImage, const int initialFrame, const int lastFrame){
-  TYRA_LOG("Setting Image"); 
+  //TYRA_LOG("Setting Image"); 
   image = newImage;
   frame = initialFrame;
   firstFrame = initialFrame;
@@ -88,9 +88,9 @@ void Animation::SetImagePNG(const char* newImage, const int initialFrame, const 
         }
         
         fileString += ".png";
-        TYRA_LOG("Image: ", fileString); 
+        //TYRA_LOG("Image: ", fileString); 
         const char* file = fileString.c_str();
-        TYRA_LOG("Image const char: ", file); 
+        //TYRA_LOG("Image const char: ", file); 
         sprite.push_back(new Sprite);
         spriteFrame.push_back(*sprite[sprite.size()-1]);
         LoadSprites(sprite[i], *position);
@@ -101,13 +101,13 @@ void Animation::SetImagePNG(const char* newImage, const int initialFrame, const 
 
 }
 
-void Animation::LoadSprite(int spriteValue){
+void Animation::LoadSprite(SpritesTextures spriteValue){
   firstFrame = 0;
 
   switch (spriteValue){
   case PeaShooterSingle:
     sprite = spr_PeaShooterSingle;
-    for(int i=0; i<104;i++){
+    for(int i=0; i<79;i++){
       spriteFrame.push_back(*sprite[i]);
       layer.push_back(0);
     }
@@ -121,7 +121,7 @@ void Animation::LoadSprite(int spriteValue){
   }
 }
 
-void Animation::LoadSprite(int spriteValue,int initFrame,int lastFrame){
+void Animation::LoadSprite(SpritesTextures spriteValue,int initFrame,int lastFrame){
 
   firstImageFrame = initFrame;
   finalImageFrame = lastFrame;
@@ -145,7 +145,8 @@ void Animation::LoadSprite(int spriteValue,int initFrame,int lastFrame){
       sprite.push_back(spr_PeaShooterSingle[i]);
       spriteFrame.push_back(*sprite[j]);
       layer.push_back(0);
-      //printf("pos %d\n",j);
+      /*printf("pos %d\n",j);
+      printf("frame %d\n",i);*/
       //printf("sprite: %d\n",sprite[j]->id);
       //printf("frame: %d\n",spriteFrame[j]->id);
       j++;
@@ -245,7 +246,7 @@ Sprite Animation::LoopAnim(const unsigned int finalFrame, bool stopFrame, bool r
 Sprite Animation::LoopAnim(bool stopFrame, bool reverse) {    
     //printf("Position Animation: (%f,%f)\n", position->x ,position->y);
     if(stopFrame == false){
-      if(timer > seconds){
+      if((timer/3)%2== 1/*timer > seconds*/){
         timer = 0;
 
         if(reverse == false)frame++;
@@ -258,11 +259,12 @@ Sprite Animation::LoopAnim(bool stopFrame, bool reverse) {
     }
     //TYRA_LOG("frame: ",frame);
     
-    timer += timerTyra.getTimeDelta() * 0.001; // En milisegundos
+    //timer += timerTyra.getTimeDelta() * 0.001; // En milisegundos
+    timer++; 
 
-    //printf("timer: %f\n",timer);
+    //printf("timer: %d\n",timer);
 
-    timerTyra.prime();
+    //timerTyra.prime();
 
     spriteFrame[frame] = *sprite[frame];
     spriteFrame[frame].position = sprite[frame]->position + *position;

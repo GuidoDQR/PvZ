@@ -29,6 +29,9 @@ class Game_state : public Tyra::Game {
 
   //Tyra::Sprite background;
   GameObject background;
+  GameObject planthead;
+  GameObject plantbody;
+  GameObject plantFull;
   
   Tyra::Timer timer;
   Tyra::AudioSong song;

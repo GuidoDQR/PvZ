@@ -26,6 +26,16 @@ void Game_state::init(){
     //printf("init backSprite id: %d\n",background.sprite->id);
     LoadTexture(background.sprite, imageFile, engine);
 
+    planthead.anim.LoadSprite(PeaShooterSingle,30,54);
+    plantbody.anim.LoadSprite(PeaShooterSingle,5,29);
+    planthead.layer = 1;
+    plantFull.anim.LoadSprite(PeaShooterSingle,80,104);
+    plantFull.position = Vec2(60,0);
+
+    /*for(unsigned int i=0;i<planthead.anim.SpriteSize();i++){
+      printf("sprite: %d x: %f y: %f\n",i+30,planthead.anim.GetSprite(i)->position.x,planthead.anim.GetSprite(i)->position.y);
+    }*/
+    
     //background.sprite->size.x = 100;
     //background.sprite->size.y = 100;
     //printf("id: %d\n",background.anim.GetSprite(0)->id);
@@ -229,7 +239,9 @@ void Game_state::loop(){
         // Cross options
         if(pad1->getClicked().Cross){
 
-          switch (optiondebug1){
+          CrossOptions();
+
+          /*switch (optiondebug1){
           case d_sprite:
             if(!b_debugSprite){
               b_debugSprite = true;  
@@ -237,6 +249,7 @@ void Game_state::loop(){
             }
             break;
           case d_hidebackground:
+            b_debugHidebackground = !b_debugHidebackground;
             background.anim.stopRender = !background.anim.stopRender;
 
             if(background.anim.stopRender) TYRA_WARN("\nHIDE BACKGROUND ACTIVATE\n");     
@@ -264,7 +277,7 @@ void Game_state::loop(){
             break;
           default:
             break;
-          }
+          }*/
           
         }
         
@@ -374,7 +387,7 @@ void Game_state::loop(){
           // se usa para cambiar el tamaño y posicion del box para probar
 
           if(pad1->getLeftJoyPad().v <= 100 ){
-            box_col.gameObject.position.y -= 1.0F;
+            box_col.gameObject.position.y -= 1.0F;           
             printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
             timer.prime();
           }else if(pad1->getLeftJoyPad().v >= 200 ){
@@ -433,12 +446,14 @@ void Game_state::loop(){
         // cursor movement
 
         if(pad1->getLeftJoyPad().v <= 100 ){
+          printf("up\n");
           speedCountY++;
           speedY = -2;       
           if(speedCountY > 10){speedY = -4;}
           else if(speedCountY > 3){speedY = -3;}
           timer.prime();
         }else if(pad1->getLeftJoyPad().v >= 200 ){
+                      printf("down\n");
           speedCountY++;
           speedY = 2;          
           if(speedCountY > 10){ speedY = 4;}
