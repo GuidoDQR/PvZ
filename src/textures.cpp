@@ -21,18 +21,18 @@ void LoadSprite(Sprite* sprite, Vec2 newPos, Vec2 newSize) {
   /*sprite->position = Vec2(screenSettings.getWidth()/ 2 - sprite->size.x / 2.0F
 , screenSettings.getHeight() /2 - sprite->size.y / 2.0F );*/
 
-  TYRA_LOG("Sprite created!");
+  //TYRA_LOG("Sprite created!");
 }
 
 void LoadSprite(Sprite* sprite){
   sprite->mode = SpriteMode::MODE_STRETCH;
 
   sprite->size = Vec2(32,32);
-  printf("Sprite Size: %f, %f\n", sprite->size.x, sprite->size.y);
+  //printf("Sprite Size: %f, %f\n", sprite->size.x, sprite->size.y);
 
   sprite->position = Vec2(0,0);
 
-  TYRA_LOG("Sprite created!");
+  //TYRA_LOG("Sprite created!");
 }
 
 void LoadSprite(Sprite* sprite, Vec2 newPos, Vec2 newSize, SpriteMode mode) {
@@ -49,7 +49,7 @@ void LoadSprite(Sprite* sprite, Vec2 newPos, Vec2 newSize, SpriteMode mode) {
   /*sprite->position = Vec2(screenSettings.getWidth()/ 2 - sprite->size.x / 2.0F
 , screenSettings.getHeight() /2 - sprite->size.y / 2.0F );*/
 
-  TYRA_LOG("Sprite created!");
+  //TYRA_LOG("Sprite created!");
 }
 
 void LoadTexture(Engine* engine, Sprite* sprite, const char* image) {
@@ -100,7 +100,7 @@ void LoadTexture(Engine* engine, Sprite* sprite, const char* image) {
   /** Let's assign this texture to sprite. */
   texture->addLink(sprite->id);
 
-  TYRA_LOG("Texture loaded!");
+  //TYRA_LOG("Texture loaded!");
 }
 
 void LoadSprite(Sprite* sprite, Vec2 newPosition) {
@@ -110,7 +110,7 @@ void LoadSprite(Sprite* sprite, Vec2 newPosition) {
 
   sprite->position = newPosition;  
 
-  TYRA_LOG("Sprite created!");
+  //TYRA_LOG("Sprite created!");
 }
 
 void LoadTexture(Sprite* sprite, const char* image, Engine* engine) {

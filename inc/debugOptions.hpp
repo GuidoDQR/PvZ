@@ -20,7 +20,8 @@ public:
 //static DebugBox& globalDebugBox() { static DebugBox x; return x;}
 
 void ShowDebugOptions();
-void CrossOptions();
+void DebugCrossOptions();
+void DebugCircleOptions();
 
 extern int  optiondebug1;
 extern int  debug_render_size_map_x;

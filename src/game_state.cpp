@@ -239,81 +239,59 @@ void Game_state::loop(){
         // Cross options
         if(pad1->getClicked().Cross){
 
-          CrossOptions();
+          DebugCrossOptions();
 
-          /*switch (optiondebug1){
+          switch (optiondebug1){
           case d_sprite:
-            if(!b_debugSprite){
-              b_debugSprite = true;  
-              TYRA_WARN("\nSPRITE DEBUG MODE ACTIVATE\n"); 
-            }
+
             break;
           case d_hidebackground:
-            b_debugHidebackground = !b_debugHidebackground;
             background.anim.stopRender = !background.anim.stopRender;
-
-            if(background.anim.stopRender) TYRA_WARN("\nHIDE BACKGROUND ACTIVATE\n");     
-            else{ TYRA_WARN("\nHIDE BACKGROUND DEACTIVATE\n"); ShowDebugOptions();}   
             break;
           case d_box:
-            if(!b_debugBox){
-              b_debugBox = true;
-              box_col.gameObject.anim.stopRender = false;
-              printf("GO stopRender: %d\n",box_col.gameObject.anim.stopRender);
-              TYRA_WARN("\nBOX DEBUG MODE ACTIVATE\n");
+            if(b_debugBox){
+              box_col.gameObject.anim.stopRender = !b_debugBox;
             }
             break;
           case d_map:
-            b_debugMap = !b_debugMap;
 
             for(int i=0;i<debug_render_size_map_x;i++){
               for(int j=0;j<debug_render_size_map_y;j++){
                 map[i][j].gameObject.anim.stopRender = !b_debugMap;
               }
             }
-
-            if(b_debugMap){TYRA_WARN("\nMAP DEBUG MODE ACTIVATE\n");}
-            else{ TYRA_WARN("\nMAP DEBUG MODE DEACTIVATE\n"); ShowDebugOptions();}
             break;
           default:
             break;
-          }*/
+          }
+
           
         }
         
         // Circle options
         if(pad1->getClicked().Circle){
-          if(optiondebug1 == d_sprite && b_debugSprite){    
-            b_debugSprite = false;
-            TYRA_WARN("\nSPRITE DEBUG MODE DEACTIVATE\n");
-          }else if(optiondebug1 == d_hidebackground ){
-            background.anim.stopRender = false;
-
-            TYRA_WARN("\nHIDE BACKGROUND DEACTIVATE\n"); 
-          }else if(optiondebug1 == d_box && b_debugBox){
-            b_debugBox = false;
-            box_col.gameObject.anim.stopRender = true;
-            printf("GO stopRender: %d\n",box_col.gameObject.anim.stopRender);
-            TYRA_WARN("\nBOX DEBUG MODE DEACTIVATE\n");
-          }else if(optiondebug1 == d_map ){
-            b_debugMap = !b_debugMap;
-
+          DebugCircleOptions();
+          switch (optiondebug1){
+          case d_sprite:
+            break;
+          case d_hidebackground:
+            background.anim.stopRender = b_debugHidebackground;
+            break;
+          case d_box:
+            box_col.gameObject.anim.stopRender = !b_debugBox;
+            break;
+          case d_map:
             for(int i=0;i<debug_render_size_map_x;i++){
               for(int j=0;j<debug_render_size_map_y;j++){
                 map[i][j].gameObject.anim.stopRender = !b_debugMap;
               }
             }
-
-            if(b_debugMap)TYRA_WARN("\nMAP DEBUG MODE ACTIVATE\n");
-            else TYRA_WARN("\nMAP DEBUG MODE DEACTIVATE\n");
+          default:
+            break;
           }
 
           ShowDebugOptions(); 
         }
-
-        
-        
-        
 
         if(b_debugSprite == true){
       
