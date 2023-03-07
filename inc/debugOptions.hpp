@@ -34,5 +34,7 @@ extern bool b_debugHidebackground;
 extern bool b_debugMap;
 extern bool b_debugCursorPlayer1;
 extern bool b_debugAnimation;
+extern bool b_debugObject;
 extern Tyra::Sprite debug_sprite; 
+extern GameObject* debug_Object;
 //extern DebugBox* debug_box_col;

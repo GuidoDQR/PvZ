@@ -1,6 +1,7 @@
 #include "debugOptions.hpp"
 
 Tyra::Sprite debug_sprite;
+GameObject*  debug_Object;
 //DebugBox* debug_box_col;
 
 int  optiondebug1 = null;
@@ -13,6 +14,7 @@ bool b_debugHidebackground  = false;
 bool b_debugBox             = false;
 bool b_debugMap             = false;
 bool b_debugAnimation       = false;
+bool b_debugObject          = false;
 
 DebugBox::DebugBox(){
   gameObject.anim.NewSprite();
@@ -112,7 +114,7 @@ void DebugCircleOptions(){
     break;
   case d_animation:
     if(b_debugAnimation){
-      b_debugAnimation = false;
+      b_debugAnimation = false; b_debugObject = false;
       TYRA_WARN("\nANIMATION MODE DEACTIVATE\n");
     }
     break;

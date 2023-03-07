@@ -30,7 +30,7 @@ void Game_state::init(){
     plantbody.anim.LoadSprite(PeaShooterSingle,5,29);
     planthead.layer = 1;
     plantFull.anim.LoadSprite(PeaShooterSingle,80,104);
-    plantFull.position = Vec2(60,0);
+    //plantFull.position = Vec2(60,0);
 
     planthead.anim.GetSprite(0)->color.r =255;
     /*for(unsigned int i=0;i<planthead.anim.SpriteSize();i++){
@@ -437,18 +437,46 @@ void Game_state::loop(){
         if(pad1->getClicked().Cross){
           plantbody.anim.nextFrame = true;
           planthead.anim.nextFrame = true;
-          plantFull.anim.nextFrame = true;
-          
+          plantFull.anim.nextFrame = true;         
         }else if(pad1->getClicked().Triangle){
           plantbody.anim.reverseFrame = !plantbody.anim.reverseFrame;
           planthead.anim.reverseFrame = !planthead.anim.reverseFrame;
           plantFull.anim.reverseFrame = !plantFull.anim.reverseFrame;
           if(plantbody.anim.reverseFrame) TYRA_WARN("\nANIMATION IS IN REVERSE\n");
           else                            TYRA_WARN("\nANIMATION IS NORMAL\n");
+        }else if(pad1->getClicked().L1){
+          TYRA_LOG("FRAME ACTUAL: ",plantFull.anim.GetActualFrame());
+        }else if(pad1->getClicked().Square){
+          b_debugObject = true;
         }
 
-        if(pad1->getClicked().Square){
-          TYRA_LOG("FRAME ACTUAL: ",plantFull.anim.GetActualFrame());
+        if(b_debugObject){
+          debug_Object = &planthead;
+
+          if(pad1->getClicked().L3){
+            debug_Object->anim.stopRender = !debug_Object->anim.stopRender;        
+          }
+
+          if(pad1->getClicked().DpadDown){
+            debug_Object->position.y -= 1.0F;           
+            printf("position: (%f,%f)\n",debug_Object->position.x,debug_Object->position.y);
+            timer.prime();
+          }else if(pad1->getClicked().DpadUp){
+            debug_Object->position.y += 1.0F;
+            printf("position: (%f,%f)\n",debug_Object->position.x,debug_Object->position.y);
+            timer.prime();
+          }
+
+          if(pad1->getClicked().DpadLeft ){
+            debug_Object->position.x -= 1.0F;
+            printf("position: (%f,%f)\n",debug_Object->position.x,debug_Object->position.y);
+            timer.prime();
+          }else if(pad1->getClicked().DpadRight){
+            debug_Object->position.x += 1.0F;
+            printf("position: (%f,%f)\n",debug_Object->position.x,debug_Object->position.y);
+            timer.prime();
+          }
+
         }
       }
     }
@@ -458,14 +486,14 @@ void Game_state::loop(){
         // cursor movement
 
         if(pad1->getLeftJoyPad().v <= 100 ){
-          printf("up\n");
+          //printf("up\n");
           speedCountY++;
           speedY = -2;       
           if(speedCountY > 10){speedY = -4;}
           else if(speedCountY > 3){speedY = -3;}
           timer.prime();
         }else if(pad1->getLeftJoyPad().v >= 200 ){
-                      printf("down\n");
+          //            printf("down\n");
           speedCountY++;
           speedY = 2;          
           if(speedCountY > 10){ speedY = 4;}
@@ -608,8 +636,16 @@ void Game_state::loop(){
     
     // debug ifs
 
-    std::string texto = "hola mundo"; 
-    DrawText(solesText,50,50);
+    if(b_debugObject){
+      std::string texto ="position: ";
+      texto += std::to_string(debug_Object->position.x);  
+      texto += ", ";
+      texto += std::to_string(debug_Object->position.y); 
+      DrawText(texto,100,20);
+    }
+    
+    
+    //DrawText(solesText,50,50);
     //utilityTools.drawLine(Vec4(50.0F, 50.0F, 50.0F),Vec4(0.0F, 0.0F, 0.0F),Color(0.0F, 128.0F, 0.0F));
     //utilityTools.drawBox(box, size, Color(0.0F, 0.0F, 255.0F));
     /** End frame will perform vsync. */
