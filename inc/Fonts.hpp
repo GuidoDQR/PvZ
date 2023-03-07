@@ -23,4 +23,4 @@ void DrawText(std::string text, int x, int y);
 void ChangeColorFont(Tyra::Color newColor);
 
 extern Tyra::Sprite spr_font_BrianneTod12;
-extern Tyra::Sprite spr_textFont[100];
+extern Tyra::Sprite spr_textFont[192];
