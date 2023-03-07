@@ -8,18 +8,11 @@ using namespace Tyra;
 std::vector<Sprite*> spr_PeaShooterSingle;
 
 void LoadSprite(Sprite* sprite, Vec2 newPos, Vec2 newSize) {
-  //const auto& screenSettings = engine->renderer.core.getSettings();
   sprite->mode = SpriteMode::MODE_STRETCH;
 
-  // sprite->size = Vec2(80.0F, 80.0F);
-  //  background size:(780.000000,524.000000)
-  //  background position: (-85,0)
   sprite->size = newSize;
-  //printf("Sprite Size: %f, %f\n", sprite->size.x, sprite->size.y);
 
   sprite->position = newPos;
-  /*sprite->position = Vec2(screenSettings.getWidth()/ 2 - sprite->size.x / 2.0F
-, screenSettings.getHeight() /2 - sprite->size.y / 2.0F );*/
 
   //TYRA_LOG("Sprite created!");
 }
@@ -28,7 +21,6 @@ void LoadSprite(Sprite* sprite){
   sprite->mode = SpriteMode::MODE_STRETCH;
 
   sprite->size = Vec2(32,32);
-  //printf("Sprite Size: %f, %f\n", sprite->size.x, sprite->size.y);
 
   sprite->position = Vec2(0,0);
 
@@ -36,18 +28,11 @@ void LoadSprite(Sprite* sprite){
 }
 
 void LoadSprite(Sprite* sprite, Vec2 newPos, Vec2 newSize, SpriteMode mode) {
-  //const auto& screenSettings = engine->renderer.core.getSettings();
   sprite->mode = mode;
 
-  // sprite->size = Vec2(80.0F, 80.0F);
-  //  background size:(780.000000,524.000000)
-  //  background position: (-85,0)
   sprite->size = newSize;
-  //printf("Sprite Size: %f, %f\n", sprite->size.x, sprite->size.y);
 
   sprite->position = newPos;
-  /*sprite->position = Vec2(screenSettings.getWidth()/ 2 - sprite->size.x / 2.0F
-, screenSettings.getHeight() /2 - sprite->size.y / 2.0F );*/
 
   //TYRA_LOG("Sprite created!");
 }
