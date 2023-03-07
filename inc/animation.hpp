@@ -49,7 +49,6 @@ public:
     Tyra::Sprite*GetSprite(int spritePos);
     Tyra::Sprite*NewSprite();
     Tyra::Sprite LoopAnim(bool stopFrame, bool nextFrame, bool reverse);
-    Tyra::Sprite LoopAnim(const unsigned int finalFrame, bool stopFrame, bool reverse); // Debug
 
     void SetSeconds(const float seconds);
     void SetPositionFrameByImageFrame(unsigned int framePos, Tyra::Vec2 positions);

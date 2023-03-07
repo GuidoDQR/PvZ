@@ -169,36 +169,6 @@ Sprite *Animation::NewSprite(){
   return sprite[sprite.size()-1];
 }
 
-Sprite Animation::LoopAnim(const unsigned int finalFrame, bool stopFrame, bool reverse) { 
-    
-    //printf("Position Animation: (%f,%f)\n", position->x ,position->y);
-    if(stopFrame == false){
-      if(timer > seconds){
-        timer = 0;
-
-        if(reverse == false)frame++;
-        else                frame--;
-        
-        if(frame > finalFrame || frame >= (int)sprite.size()){
-          if(frame )
-          frame = firstFrame;
-        }  
-      }
-    }
-    TYRA_LOG("frame: ",frame);
-    TYRA_LOG("sprite.size(): ",sprite.size());
-    
-    timer += timerTyra.getTimeDelta() * 0.001; // En milisegundos
-
-    //printf("timer: %f\n",timer);
-
-    timerTyra.prime();
-
-    spriteFrame[frame].position = sprite[frame]->position + *position;
-
-    *spriteGO = sprite[frame];
-    return spriteFrame[frame];
-}
 
 Sprite Animation::LoopAnim(bool stopFrame, bool nextFrame, bool reverse) {    
     //printf("Position Animation: (%f,%f)\n", position->x ,position->y);
