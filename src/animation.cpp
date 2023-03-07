@@ -24,9 +24,9 @@ Animation::Animation(){
   firstImageFrame = finalImageFrame = 0;
   timer           = 0;
   seconds         = 0.6f;
-  reverseFrame = stopFrame = stopRender = false;
-  position     = new Vec2(0,0);
-  sprite = std::vector<Sprite*>(0);
+  reverseFrame    = nextFrame = stopFrame = stopRender = false;
+  position        = new Vec2(0,0);
+  sprite          = std::vector<Sprite*>(0);
 
   //if(totalLayers.size() == 0){ totalLayers.push_back(0);}
   //printf("creado\n");
@@ -40,7 +40,7 @@ Animation::Animation(Engine* t_engine, Vec2* gameObjectPosition, Sprite** gameOb
   firstImageFrame = finalImageFrame = 0;
   timer           = 0;
   seconds         = 0.6f;
-  reverseFrame    = stopFrame = stopRender = false;
+  reverseFrame    = nextFrame = stopFrame = stopRender = false;
   position        = gameObjectPosition;
   spriteGO        = gameObjectSprite;
   //sprite.resize(0);
@@ -53,7 +53,7 @@ Animation::Animation(Engine* t_engine, Vec2* gameObjectPosition, Sprite** gameOb
 }
 
 Animation::~Animation() { 
-  for(unsigned int i = firstFrame; i < finalFrame; i++){
+  for(int i = firstFrame; i < finalFrame; i++){
     engine->renderer.getTextureRepository().freeBySprite(*sprite[i]);
     engine->renderer.getTextureRepository().freeBySprite(spriteFrame[i]);
   }   
@@ -101,26 +101,6 @@ void Animation::SetImagePNG(const char* newImage, const int initialFrame, const 
 
 }
 
-void Animation::LoadSprite(SpritesTextures spriteValue){
-  firstFrame = 0;
-
-  switch (spriteValue){
-  case PeaShooterSingle:
-    sprite = spr_PeaShooterSingle;
-    for(int i=0; i<79;i++){
-      spriteFrame.push_back(*sprite[i]);
-      layer.push_back(0);
-    }
-      
-      
-    finalFrame = spr_PeaShooterSingle.size();
-    break;
-  
-  default:
-    break;
-  }
-}
-
 void Animation::LoadSprite(SpritesTextures spriteValue,int initFrame,int lastFrame){
 
   firstImageFrame = initFrame;
@@ -130,11 +110,13 @@ void Animation::LoadSprite(SpritesTextures spriteValue,int initFrame,int lastFra
   //finalFrame = lastFrame;
   firstFrame = 0;
 
-  if(firstImageFrame > finalImageFrame - firstImageFrame){
+  finalFrame = finalImageFrame - firstImageFrame; 
+
+  /*if(firstImageFrame > finalImageFrame - firstImageFrame){
     finalFrame = finalImageFrame - firstImageFrame + 1; 
   }else{
     finalFrame = finalImageFrame;
-  }
+  }*/
 
   initFrame--; // como se incluye el primer frame, se resta
   int j = 0;
@@ -187,31 +169,6 @@ Sprite *Animation::NewSprite(){
   return sprite[sprite.size()-1];
 }
 
-Sprite Animation::LoopAnim(const unsigned int finalFrame) { 
-    //TYRA_LOG("FPS: ", engine->info.getFps());
-    //TYRA_LOG("Loop!"); 
-    
-    //printf("Position Animation: (%f,%f)\n", position->x ,position->y);
-    if(timer > seconds){
-      timer = 0;
-      frame++;
-      
-      if(frame >= finalFrame || frame >= sprite.size()){
-        frame = firstFrame;
-      }
-      //TYRA_LOG("frame: ",frame);
-    }
-
-    timer += timerTyra.getTimeDelta() * 0.001; // En milisegundos
-
-    //printf("timer: %f\n",timer);
-
-    timerTyra.prime();
-
-    spriteFrame[frame].position = sprite[frame]->position + *position;
-    return spriteFrame[frame];
-}
-
 Sprite Animation::LoopAnim(const unsigned int finalFrame, bool stopFrame, bool reverse) { 
     
     //printf("Position Animation: (%f,%f)\n", position->x ,position->y);
@@ -222,7 +179,7 @@ Sprite Animation::LoopAnim(const unsigned int finalFrame, bool stopFrame, bool r
         if(reverse == false)frame++;
         else                frame--;
         
-        if(frame >= finalFrame || frame >= sprite.size()){
+        if(frame > finalFrame || frame >= (int)sprite.size()){
           if(frame )
           frame = firstFrame;
         }  
@@ -243,7 +200,7 @@ Sprite Animation::LoopAnim(const unsigned int finalFrame, bool stopFrame, bool r
     return spriteFrame[frame];
 }
 
-Sprite Animation::LoopAnim(bool stopFrame, bool reverse) {    
+Sprite Animation::LoopAnim(bool stopFrame, bool nextFrame, bool reverse) {    
     //printf("Position Animation: (%f,%f)\n", position->x ,position->y);
     if(stopFrame == false){
       if((timer/3)%2== 1/*timer > seconds*/){
@@ -252,10 +209,17 @@ Sprite Animation::LoopAnim(bool stopFrame, bool reverse) {
         if(reverse == false)frame++;
         else                frame--;
         
-        if(frame >= finalFrame || frame >= sprite.size()){
+        if(frame > finalFrame || frame >= (int)sprite.size()){
           frame = firstFrame;
-        }  
+        }else if(frame < 0){ frame = finalFrame;}   
       }
+    }else if(nextFrame){
+      if(reverse == false) frame++;
+      else                 frame--;
+
+      if(frame > finalFrame || frame >= (int)sprite.size()){
+        frame = firstFrame;
+      }else if(frame < 0){ frame = finalFrame;}  
     }
     //TYRA_LOG("frame: ",frame);
     
@@ -299,20 +263,6 @@ Vec2 Animation::GetPositionFrame(const unsigned int frame){
 
 void Animation::SetFrameLayer(const int frame, const int newLayer){ 
   layer[frame] = newLayer;
-
-  /*bool createLayer = false;
-  for(unsigned int i = 0;i<totalLayers.size();i++){
-    if(totalLayers[i] != newLayer){
-      createLayer = true;
-      i= totalLayers.size();
-    }
-  }
-
-  if(createLayer){ 
-    totalLayers.push_back(newLayer); 
-    printf("new layer value: %d\n",newLayer);
-    OrderLayers();
-  }*/
 }
 
 Sprite* Animation::GetFrame(const int frame){ return &spriteFrame[frame];}

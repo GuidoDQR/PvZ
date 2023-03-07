@@ -32,6 +32,7 @@ void Game_state::init(){
     plantFull.anim.LoadSprite(PeaShooterSingle,80,104);
     plantFull.position = Vec2(60,0);
 
+    planthead.anim.GetSprite(0)->color.r =255;
     /*for(unsigned int i=0;i<planthead.anim.SpriteSize();i++){
       printf("sprite: %d x: %f y: %f\n",i+30,planthead.anim.GetSprite(i)->position.x,planthead.anim.GetSprite(i)->position.y);
     }*/
@@ -236,189 +237,222 @@ void Game_state::loop(){
         }
       } 
 
-        // Cross options
-        if(pad1->getClicked().Cross){
+      // Cross options
+      if(pad1->getClicked().Cross){
 
-          DebugCrossOptions();
+        DebugCrossOptions();
 
-          switch (optiondebug1){
-          case d_sprite:
-
-            break;
-          case d_hidebackground:
-            background.anim.stopRender = !background.anim.stopRender;
-            break;
-          case d_box:
-            if(b_debugBox){
-              box_col.gameObject.anim.stopRender = !b_debugBox;
-            }
-            break;
-          case d_map:
-
-            for(int i=0;i<debug_render_size_map_x;i++){
-              for(int j=0;j<debug_render_size_map_y;j++){
-                map[i][j].gameObject.anim.stopRender = !b_debugMap;
-              }
-            }
-            break;
-          default:
-            break;
-          }
-
-          
-        }
-        
-        // Circle options
-        if(pad1->getClicked().Circle){
-          DebugCircleOptions();
-          switch (optiondebug1){
-          case d_sprite:
-            break;
-          case d_hidebackground:
-            background.anim.stopRender = b_debugHidebackground;
-            break;
-          case d_box:
+        switch (optiondebug1){
+        case d_sprite:
+          break;
+        case d_hidebackground:
+          background.anim.stopRender = !background.anim.stopRender;
+          break;
+        case d_box:
+          if(b_debugBox){
             box_col.gameObject.anim.stopRender = !b_debugBox;
-            break;
-          case d_map:
-            for(int i=0;i<debug_render_size_map_x;i++){
-              for(int j=0;j<debug_render_size_map_y;j++){
-                map[i][j].gameObject.anim.stopRender = !b_debugMap;
-              }
+          }
+          break;
+        case d_map:
+          for(int i=0;i<debug_render_size_map_x;i++){
+            for(int j=0;j<debug_render_size_map_y;j++){
+              map[i][j].gameObject.anim.stopRender = !b_debugMap;
             }
-          default:
-            break;
           }
-
-          ShowDebugOptions(); 
+          break;
+        case d_animation:
+          plantbody.anim.stopFrame = true;
+          planthead.anim.stopFrame = true;
+          plantFull.anim.stopFrame = true;
+          break;
+        default:
+          break;
         }
-
-        if(b_debugSprite == true){
-      
-          // se usa para cambiar el tamaño y posicion del sprite para probar
-
-          if(pad1->getLeftJoyPad().v <= 100 ){
-            speedCountY++;
-            speedY = -1;       
-            if(speedCountY > 5){speedY = -2;}
-            else if(speedCountY > 10){speedY = -3;}
-            timer.prime();
-          }else if(pad1->getLeftJoyPad().v >= 200 ){
-            speedCountY++;
-            speedY = 1;          
-            if(speedCountY > 5){ speedY = 2;}
-            else if(speedCountY > 10){speedY = 3;}
-            timer.prime();
-          }else{ speedCountY = 0; speedY = 0;}
-
-          if(pad1->getLeftJoyPad().h <= 100 ){
-            speedX = -1;
-            speedCountX++;
-            if(speedCountX > 5){speedX = -2;}
-            else if(speedCountX > 10){speedX = -3;} 
-            timer.prime();
-          }else if(pad1->getLeftJoyPad().h >= 200 ){
-            speedX = 1;
-            speedCountX++;
-            if(speedCountX > 5){speedX = 2;}
-            else if(speedCountX > 10){speedX = 3;}           
-            timer.prime();
-          }else{ speedCountX = 0; speedX = 0;}
-
-          if(speedX !=0 || speedY != 0){
-            debug_sprite.position += Vec2(speedX, speedY);
-            printf("position: (%f,%f)\n",debug_sprite.position.x,debug_sprite.position.y);
-          }
-
-          if(pad1->getRightJoyPad().v <= 100){
-            debug_sprite.size.y -= 1.0f;
-            printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
-            timer.prime();
-          }else if(pad1->getRightJoyPad().v >= 200 ){
-            debug_sprite.size.y += 1.0f;
-            printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
-            timer.prime();
-          }
-
-          if(pad1->getRightJoyPad().h >= 200 ){
-            debug_sprite.size.x += 1.0f;
-            printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
-            timer.prime();
-          }else if(pad1->getRightJoyPad().h <= 100 ){
-            debug_sprite.size.x -= 1.0f;
-            printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
-            timer.prime();
-          }
-                 
-          if(pad1->getPressed().Triangle){
-            debug_sprite.size += Vec2(1.0F, 1.0F);
-            printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
-            timer.prime();
-          }else if(pad1->getPressed().Square){
-            debug_sprite.size -= Vec2(1.0F, 1.0F);
-            printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
-            timer.prime();
-          }
-        }
-
-        if(b_debugBox == true){
-          // se usa para cambiar el tamaño y posicion del box para probar
-
-          if(pad1->getLeftJoyPad().v <= 100 ){
-            box_col.gameObject.position.y -= 1.0F;           
-            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
-            timer.prime();
-          }else if(pad1->getLeftJoyPad().v >= 200 ){
-            box_col.gameObject.position.y += 1.0F;
-            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
-            timer.prime();
-          }
-
-          if(pad1->getLeftJoyPad().h <= 100 ){
-            box_col.gameObject.position.x -= 1.0F;
-            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
-            timer.prime();
-          }else if(pad1->getLeftJoyPad().h >= 200 ){
-            box_col.gameObject.position.x += 1.0F;
-            printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
-            timer.prime();
-          }
           
-          if(pad1->getRightJoyPad().v <= 100){
-            box_col.collider->size.y -= 1.0f;
-            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
-            timer.prime();
-          }else if(pad1->getRightJoyPad().v >= 200 ){
-            box_col.collider->size.y += 1.0f;
-            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
-            timer.prime();
+      }
+        
+      // Circle options
+      if(pad1->getClicked().Circle){
+        DebugCircleOptions();
+        switch (optiondebug1){
+        case d_sprite:
+          break;
+        case d_hidebackground:
+          background.anim.stopRender = b_debugHidebackground;
+          break;
+        case d_box:
+          box_col.gameObject.anim.stopRender = !b_debugBox;
+          break;
+        case d_map:
+          for(int i=0;i<debug_render_size_map_x;i++){
+            for(int j=0;j<debug_render_size_map_y;j++){
+              map[i][j].gameObject.anim.stopRender = !b_debugMap;
+            }
           }
+          break;
+        case d_animation:
+          plantbody.anim.stopFrame = false;
+          planthead.anim.stopFrame = false;
+          plantFull.anim.stopFrame = false;
+          break;
+        default:
+          break;
+        }
+        ShowDebugOptions(); 
+      }
 
-          if(pad1->getRightJoyPad().h >= 200 ){
-            box_col.collider->size.x += 1.0f;
-            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
-            timer.prime();
-          }else if(pad1->getRightJoyPad().h <= 100 ){
-            box_col.collider->size.x -= 1.0f;
-            printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
-            timer.prime();
-          }
+      if(b_debugSprite == true){
+    
+        // se usa para cambiar el tamaño y posicion del sprite para probar
 
-          if(pad1->getPressed().Triangle){
-            box_col.collider->size += Vec2(1.0F, 1.0F);
-            printf("size: (%f,%f)\n",box_col.collider->size.x, box_col.collider->size.y);
-            timer.prime();
-          }else if(pad1->getPressed().Square){
-            box_col.collider->size -= Vec2(1.0F, 1.0F);
-            printf("size: (%f,%f)\n",box_col.collider->size.x, box_col.collider->size.y);
-            timer.prime();
-          }
+        if(pad1->getLeftJoyPad().v <= 100 ){
+          speedCountY++;
+          speedY = -1;       
+          if(speedCountY > 5){speedY = -2;}
+          else if(speedCountY > 10){speedY = -3;}
+          timer.prime();
+        }else if(pad1->getLeftJoyPad().v >= 200 ){
+          speedCountY++;
+          speedY = 1;          
+          if(speedCountY > 5){ speedY = 2;}
+          else if(speedCountY > 10){speedY = 3;}
+          timer.prime();
+        }else{ speedCountY = 0; speedY = 0;}
+
+        if(pad1->getLeftJoyPad().h <= 100 ){
+          speedX = -1;
+          speedCountX++;
+          if(speedCountX > 5){speedX = -2;}
+          else if(speedCountX > 10){speedX = -3;} 
+          timer.prime();
+        }else if(pad1->getLeftJoyPad().h >= 200 ){
+          speedX = 1;
+          speedCountX++;
+          if(speedCountX > 5){speedX = 2;}
+          else if(speedCountX > 10){speedX = 3;}           
+          timer.prime();
+        }else{ speedCountX = 0; speedX = 0;}
+
+        if(speedX !=0 || speedY != 0){
+          debug_sprite.position += Vec2(speedX, speedY);
+          printf("position: (%f,%f)\n",debug_sprite.position.x,debug_sprite.position.y);
+        }
+
+        if(pad1->getRightJoyPad().v <= 100){
+          debug_sprite.size.y -= 1.0f;
+          printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
+          timer.prime();
+        }else if(pad1->getRightJoyPad().v >= 200 ){
+          debug_sprite.size.y += 1.0f;
+          printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
+          timer.prime();
+        }
+
+        if(pad1->getRightJoyPad().h >= 200 ){
+          debug_sprite.size.x += 1.0f;
+          printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
+          timer.prime();
+        }else if(pad1->getRightJoyPad().h <= 100 ){
+          debug_sprite.size.x -= 1.0f;
+          printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
+          timer.prime();
+        }
+               
+        if(pad1->getPressed().Triangle){
+          debug_sprite.size += Vec2(1.0F, 1.0F);
+          printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
+          timer.prime();
+        }else if(pad1->getPressed().Square){
+          debug_sprite.size -= Vec2(1.0F, 1.0F);
+          printf("size: (%f,%f)\n",debug_sprite.size.x,debug_sprite.size.y);
+          timer.prime();
         }
       }
 
-      
-      
+      if(b_debugBox == true){
+        // se usa para cambiar el tamaño y posicion del box para probar
 
+        if(pad1->getLeftJoyPad().v <= 100 ){
+          box_col.gameObject.position.y -= 1.0F;           
+          printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
+          timer.prime();
+        }else if(pad1->getLeftJoyPad().v >= 200 ){
+          box_col.gameObject.position.y += 1.0F;
+          printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
+          timer.prime();
+        }
+
+        if(pad1->getLeftJoyPad().h <= 100 ){
+          box_col.gameObject.position.x -= 1.0F;
+          printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
+          timer.prime();
+        }else if(pad1->getLeftJoyPad().h >= 200 ){
+          box_col.gameObject.position.x += 1.0F;
+          printf("position: (%f,%f)\n",box_col.gameObject.position.x,box_col.gameObject.position.y);
+          timer.prime();
+        }
+        
+        if(pad1->getRightJoyPad().v <= 100){
+          box_col.collider->size.y -= 1.0f;
+          printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
+          timer.prime();
+        }else if(pad1->getRightJoyPad().v >= 200 ){
+          box_col.collider->size.y += 1.0f;
+          printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
+          timer.prime();
+        }
+
+        if(pad1->getRightJoyPad().h >= 200 ){
+          box_col.collider->size.x += 1.0f;
+          printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
+          timer.prime();
+        }else if(pad1->getRightJoyPad().h <= 100 ){
+          box_col.collider->size.x -= 1.0f;
+          printf("size: (%f,%f)\n",box_col.collider->size.x,box_col.collider->size.y);
+          timer.prime();
+        }
+
+        if(pad1->getPressed().Triangle){
+            box_col.collider->size += Vec2(1.0F, 1.0F);
+            printf("size: (%f,%f)\n",box_col.collider->size.x, box_col.collider->size.y);
+            timer.prime();
+        }else if(pad1->getPressed().Square){
+            box_col.collider->size -= Vec2(1.0F, 1.0F);
+            printf("size: (%f,%f)\n",box_col.collider->size.x, box_col.collider->size.y);
+            timer.prime();
+        }
+      }
+
+      if(b_debugAnimation){
+
+        if(plantbody.anim.nextFrame == true){ 
+          TYRA_LOG("FRAME BODY: ",plantbody.anim.GetActualFrame());
+          TYRA_LOG("FRAME HEAD: ",planthead.anim.GetActualFrame());
+          TYRA_LOG("FRAME FULL: ",plantFull.anim.GetActualFrame());
+          plantbody.anim.nextFrame = false;
+          planthead.anim.nextFrame = false;
+          plantFull.anim.nextFrame = false;
+        }
+
+        if(pad1->getClicked().Cross){
+          plantbody.anim.nextFrame = true;
+          planthead.anim.nextFrame = true;
+          plantFull.anim.nextFrame = true;
+          
+        }else if(pad1->getClicked().Triangle){
+          plantbody.anim.reverseFrame = !plantbody.anim.reverseFrame;
+          planthead.anim.reverseFrame = !planthead.anim.reverseFrame;
+          plantFull.anim.reverseFrame = !plantFull.anim.reverseFrame;
+          if(plantbody.anim.reverseFrame) TYRA_WARN("\nANIMATION IS IN REVERSE\n");
+          else                            TYRA_WARN("\nANIMATION IS NORMAL\n");
+        }
+
+        if(pad1->getClicked().Square){
+          TYRA_LOG("FRAME ACTUAL: ",plantFull.anim.GetActualFrame());
+        }
+      }
+    }
+    
 
     //if(timer.getTimeDelta()> 1000){ // sin esto es dependiente del framerate, pero ahora anda mas fluido 
         // cursor movement

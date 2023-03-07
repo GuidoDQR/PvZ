@@ -53,7 +53,7 @@ void GameObjectManager::Render(){
                 //printf("sprite id: %u\n",gameObjects[i]->anim.GetSprite(0)->id);
                 //render2D->render(gameObjects[i]->anim.LoopAnim(gameObjects[i]->anim.stopFrame,gameObjects[i]->anim.reverseFrame));
                 //printf("GO: %d, value: %d\n",i,gameObjects[i]->layer);
-                spriteRender[countSprite] = gameObjects[i]->anim.LoopAnim(gameObjects[i]->anim.stopFrame,gameObjects[i]->anim.reverseFrame);
+                spriteRender[countSprite] = gameObjects[i]->anim.LoopAnim(gameObjects[i]->anim.stopFrame,gameObjects[i]->anim.nextFrame,gameObjects[i]->anim.reverseFrame);
                 layerRender [countSprite] = gameObjects[i]->anim.GetFrameLayer(gameObjects[i]->anim.GetActualFrame());
                 //printf("id sprite: %u\n",spriteRender[countSprite].id);
                 countSprite++;

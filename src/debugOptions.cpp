@@ -6,12 +6,13 @@ Tyra::Sprite debug_sprite;
 int  optiondebug1 = null;
 int  debug_render_size_map_x = 0;
 int  debug_render_size_map_y = 0;
-bool optiondebug2 = false;
+bool optiondebug2           = false;
 bool b_debug                = false;
 bool b_debugSprite          = false;
 bool b_debugHidebackground  = false;
 bool b_debugBox             = false;
 bool b_debugMap             = false;
+bool b_debugAnimation       = false;
 
 DebugBox::DebugBox(){
   gameObject.anim.NewSprite();
@@ -78,6 +79,10 @@ void DebugCrossOptions(){
   case d_cursorPlayer1:
   break;
   case d_animation:
+    if(!b_debugAnimation){
+      b_debugAnimation = true;
+      TYRA_WARN("\nANIMATION MODE ACTIVATE\n");
+    }   
   break;
   
   default:
@@ -104,6 +109,13 @@ void DebugCircleOptions(){
     b_debugMap = !b_debugMap;
     if(b_debugMap)TYRA_WARN("\nMAP DEBUG MODE ACTIVATE\n");
             else  TYRA_WARN("\nMAP DEBUG MODE DEACTIVATE\n");
+    break;
+  case d_animation:
+    if(b_debugAnimation){
+      b_debugAnimation = false;
+      TYRA_WARN("\nANIMATION MODE DEACTIVATE\n");
+    }
+    break;
   default:
     break;
   }

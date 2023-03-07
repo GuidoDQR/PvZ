@@ -19,9 +19,9 @@ private:
     
     const char* image;
     int timer; 
-    unsigned int frame;       // Frame que se reproduce
-    unsigned int firstFrame;  // Primer Frame que se reproduce
-    unsigned int finalFrame;  // Ultimo Frame que se reproduce
+    int frame;                     // Frame que se reproduce
+    int firstFrame;                // Primer Frame que se reproduce
+    int finalFrame;                // Ultimo Frame que se reproduce
     unsigned int firstImageFrame;  // Primer Frame basado en los numeros de la imagen 
     unsigned int finalImageFrame;  // Ultimo Frame basado en los numeros de la imagen 
     float seconds;
@@ -37,19 +37,18 @@ public:
     bool reverseFrame;
     bool stopFrame;
     bool stopRender;
+    bool nextFrame;
     
     void SetRender(Tyra::Engine* engine);
     void SetPositionGameObject(Tyra::Vec2* position);
     
-    void LoadSprite(SpritesTextures spriteValue);
-    void LoadSprite(SpritesTextures spriteValue,int firstFrame,int finalFrame);
+    void LoadSprite(SpritesTextures spriteValue,int initFrame,int lastFrame);
     unsigned int SpriteSize(); // function is down
 
     void SetInitialFrame(const unsigned int frame);
     Tyra::Sprite*GetSprite(int spritePos);
     Tyra::Sprite*NewSprite();
-    Tyra::Sprite LoopAnim(const unsigned int finalFrame);
-    Tyra::Sprite LoopAnim(bool stopFrame, bool reverse); // Debug
+    Tyra::Sprite LoopAnim(bool stopFrame, bool nextFrame, bool reverse);
     Tyra::Sprite LoopAnim(const unsigned int finalFrame, bool stopFrame, bool reverse); // Debug
 
     void SetSeconds(const float seconds);
