@@ -5,9 +5,7 @@
 #include "textures.hpp"
 #include "string.h"
 
-// 16 columns *
-
-const int charSize = 160;
+const int charSize = 160;   // 16 columns * 10 rows
 const int BriannedTodChar[charSize]{ 
    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',

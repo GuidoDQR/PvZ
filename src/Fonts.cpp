@@ -14,7 +14,7 @@ bool Load_sprite_text_font(Tyra::Engine* engine){
     for(int i=0;i<92;i++){
         LoadSprite(&spr_textFont[i],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[i],17),Tyra::SpriteMode::MODE_REPEAT);
         file  = "FONTS/BRIANNETOD/12/";
-        file +=  std::to_string(BriannedTodChar[i]); 
+        file +=  std::to_string(i); 
         file += ".PNG";
         LoadTexture(&spr_textFont[i],file.c_str(),engine);
     }
