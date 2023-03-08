@@ -9,99 +9,20 @@ bool Load_sprite_text_font(Tyra::Engine* engine){
     spr_font_BrianneTod12.mode = Tyra::SpriteMode::MODE_REPEAT;
     
     std::string file;
-    int number = 65;
 
-    // upper letters
-    for(int i=0; i< 26;i++){
+    // Load max 92
+    for(int i=0;i<92;i++){
         LoadSprite(&spr_textFont[i],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[i],17),Tyra::SpriteMode::MODE_REPEAT);
         file  = "FONTS/BRIANNETOD/12/";
-        file += number; 
+        file +=  std::to_string(BriannedTodChar[i]); 
         file += ".PNG";
         LoadTexture(&spr_textFont[i],file.c_str(),engine);
-        number++;
     }
 
-    // low letters
+    /*for(int i =0 ;i< charSize;i++ ){
 
-    number = 97;
-    for(int i=26; i< 52;i++){
-        LoadSprite(&spr_textFont[i],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[i],17),Tyra::SpriteMode::MODE_REPEAT);
-        file  = "FONTS/BRIANNETOD/12/";
-        file += number; 
-        file += ".PNG";
-        LoadTexture(&spr_textFont[i],file.c_str(),engine);
-        number++;
-    }
-
-    // numbers
-
-    number = 48;
-    for(int i=52; i< 62;i++){
-        LoadSprite(&spr_textFont[i],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[i],17),Tyra::SpriteMode::MODE_REPEAT);
-        file  = "FONTS/BRIANNETOD/12/";
-        file += number; 
-        file += ".PNG";
-        LoadTexture(&spr_textFont[i],file.c_str(),engine);
-        number++;
-    }
-
-    // "*" symbol
-    LoadSprite(&spr_textFont[72],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[72],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/42.PNG";
-    LoadTexture(&spr_textFont[72],file.c_str(),engine);
-
-    // "()" symbols
-
-    number = 40;
-    for(int i=73; i< 75;i++){
-        LoadSprite(&spr_textFont[i],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[i],17),Tyra::SpriteMode::MODE_REPEAT);
-        file  = "FONTS/BRIANNETOD/12/";
-        file += std::to_string(number); 
-        file += ".PNG";
-        LoadTexture(&spr_textFont[i],file.c_str(),engine);
-        number++;
-    }
-
-    // "-" symbol
-    LoadSprite(&spr_textFont[75],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[75],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/45.PNG";
-    LoadTexture(&spr_textFont[75],file.c_str(),engine);
-
-    // "_" symbol
-    LoadSprite(&spr_textFont[76],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[76],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/95.PNG";
-    LoadTexture(&spr_textFont[76],file.c_str(),engine);
-
-    // "=" symbol
-    LoadSprite(&spr_textFont[77],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[77],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/61.PNG";
-    LoadTexture(&spr_textFont[77],file.c_str(),engine);
-    
-    // "+" symbol
-    LoadSprite(&spr_textFont[78],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[78],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/43.PNG";
-    LoadTexture(&spr_textFont[78],file.c_str(),engine);
-
-    // ":" symbol
-    LoadSprite(&spr_textFont[83],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[83],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/58.PNG";
-    LoadTexture(&spr_textFont[83],file.c_str(),engine);
-
-    // "," symbol
-    LoadSprite(&spr_textFont[86],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[86],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/44.PNG";
-    LoadTexture(&spr_textFont[86],file.c_str(),engine);
-
-    // "." symbol
-    LoadSprite(&spr_textFont[88],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[88],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/46.PNG";
-    LoadTexture(&spr_textFont[88],file.c_str(),engine);
-
-    // "/" symbol
-    LoadSprite(&spr_textFont[91],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[91],17),Tyra::SpriteMode::MODE_REPEAT);
-    file  = "FONTS/BRIANNETOD/12/47.PNG";
-    LoadTexture(&spr_textFont[91],file.c_str(),engine);
-
+        printf("pos: %d. char: %d\n",i,BriannedTodChar[i]);
+    }*/
     return true;
 } 
 
