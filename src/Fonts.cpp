@@ -1,7 +1,7 @@
 #include "Fonts.hpp"
 
 Tyra::Sprite spr_font_BrianneTod12;
-Tyra::Sprite spr_textFont[192];
+Tyra::Sprite spr_textFont[160];
 
 bool Load_sprite_text_font(Tyra::Engine* engine){
     LoadSprite(&spr_font_BrianneTod12,Tyra::Vec2(0,0),Tyra::Vec2(10,17));
@@ -14,7 +14,7 @@ bool Load_sprite_text_font(Tyra::Engine* engine){
     // upper letters
     for(int i=0; i< 26;i++){
         LoadSprite(&spr_textFont[i],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[i],17),Tyra::SpriteMode::MODE_REPEAT);
-        file  = "FONTS/BRIANNETOD/12/U";
+        file  = "FONTS/BRIANNETOD/12/";
         file += number; 
         file += ".PNG";
         LoadTexture(&spr_textFont[i],file.c_str(),engine);
@@ -82,15 +82,20 @@ bool Load_sprite_text_font(Tyra::Engine* engine){
     file  = "FONTS/BRIANNETOD/12/43.PNG";
     LoadTexture(&spr_textFont[78],file.c_str(),engine);
 
+    // ":" symbol
+    LoadSprite(&spr_textFont[83],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[83],17),Tyra::SpriteMode::MODE_REPEAT);
+    file  = "FONTS/BRIANNETOD/12/58.PNG";
+    LoadTexture(&spr_textFont[83],file.c_str(),engine);
+
     // "," symbol
-    LoadSprite(&spr_textFont[87],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[87],17),Tyra::SpriteMode::MODE_REPEAT);
+    LoadSprite(&spr_textFont[86],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[86],17),Tyra::SpriteMode::MODE_REPEAT);
     file  = "FONTS/BRIANNETOD/12/44.PNG";
-    LoadTexture(&spr_textFont[87],file.c_str(),engine);
+    LoadTexture(&spr_textFont[86],file.c_str(),engine);
 
     // "." symbol
-    LoadSprite(&spr_textFont[89],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[89],17),Tyra::SpriteMode::MODE_REPEAT);
+    LoadSprite(&spr_textFont[88],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[88],17),Tyra::SpriteMode::MODE_REPEAT);
     file  = "FONTS/BRIANNETOD/12/46.PNG";
-    LoadTexture(&spr_textFont[89],file.c_str(),engine);
+    LoadTexture(&spr_textFont[88],file.c_str(),engine);
 
     // "/" symbol
     LoadSprite(&spr_textFont[91],Tyra::Vec2(0,0),Tyra::Vec2(BriannedTod12Width[91],17),Tyra::SpriteMode::MODE_REPEAT);
@@ -107,16 +112,16 @@ void DrawText(std::string text, int x, int y){
     int offsetX = 0;
     int offsetY = 0;
 
+    int ascii;
+    int sprPos;
     for(unsigned int i=0; i<maxLetter;i++){
-        int ascii = text[i];
-        int sprPos  = ' ';
+        ascii = text[i];
+        sprPos = ' ';
 
-        if(ascii >= 'A' && ascii <= 'Z'){
-            sprPos = ascii - 65;
-        }else if(ascii >= 'a' && ascii <= 'z'){
-            sprPos = ascii - 71;
-        }else if(ascii >= '0' && ascii <='9'){
-            sprPos = ascii + 4;
+        for(int i=0;i<charSize;i++){
+            if(ascii == BriannedTodChar[i]){
+                sprPos = i;
+            }
         }
 
         //printf("pos: %d. ascii: %d. sprPos: %d\n",i,ascii,sprPos);

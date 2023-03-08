@@ -5,7 +5,24 @@
 #include "textures.hpp"
 #include "string.h"
 
-const float BriannedTod12Width[192]{
+// 16 columns *
+
+const int charSize = 160;
+const int BriannedTodChar[charSize]{ 
+   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+   'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+   'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+   'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '~', '`',
+   '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{',
+   ']', '}', ';', ':','\'', '"', ',', '<', '.', '>', '/', '?', '¡', '¢', '£', '¥',
+   '§', '©', '®', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë',
+   'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü',
+   'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í',
+   'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ'
+};
+
+
+const int BriannedTod12Width[charSize]{
     9,  10,  10,   8,   9,   8,  11,   9,   4,   9,  10,   9,  10,   8,   9,   8,
     9,  10,   8,  10,   9,   9,  11,   8,   7,   8,   7,   7,   6,   7,   6,   8,
     7,   7,   4,   6,   8,   3,   9,   8,   7,   6,   7,   7,   6,   7,   7,   6,
@@ -23,4 +40,4 @@ void DrawText(std::string text, int x, int y);
 void ChangeColorFont(Tyra::Color newColor);
 
 extern Tyra::Sprite spr_font_BrianneTod12;
-extern Tyra::Sprite spr_textFont[192];
+extern Tyra::Sprite spr_textFont[160];
