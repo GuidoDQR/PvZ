@@ -34,7 +34,7 @@ const int BriannedTod12Width[charSize]{
 };
 
 bool Load_sprite_text_font(Tyra::Engine* engine);
-void DrawText(std::string text, int x, int y);
+void DrawText(std::string text, int x, int y,Tyra::Color color);
 void ChangeColorFont(Tyra::Color newColor);
 
 extern Tyra::Sprite spr_font_BrianneTod12;

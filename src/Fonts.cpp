@@ -26,7 +26,7 @@ bool Load_sprite_text_font(Tyra::Engine* engine){
     return true;
 } 
 
-void DrawText(std::string text, int x, int y){
+void DrawText(std::string text, int x, int y, Tyra::Color color){
 
     unsigned int maxLetter = text.size();   
     int spaceLetter = 1;
@@ -35,6 +35,9 @@ void DrawText(std::string text, int x, int y){
 
     int ascii;
     int sprPos;
+
+    Tyra::Sprite spr_Font;
+
     for(unsigned int i=0; i<maxLetter;i++){
         ascii = text[i];
         sprPos = ' ';
@@ -42,6 +45,8 @@ void DrawText(std::string text, int x, int y){
         for(int i=0;i<charSize;i++){
             if(ascii == BriannedTodChar[i]){
                 sprPos = i;
+                spr_Font = spr_textFont[sprPos];
+                spr_Font.color = color;
             }
         }
 
@@ -51,12 +56,12 @@ void DrawText(std::string text, int x, int y){
                 offsetY += 18;
                 offsetX = 0;
         }else{
-            spr_textFont[sprPos].position.x = x + offsetX;
-            spr_textFont[sprPos].position.y = y + offsetY;
+            spr_Font.position.x = x + offsetX;
+            spr_Font.position.y = y + offsetY;
 
             if(sprPos != ' '){
-                engine->renderer.renderer2D.render(spr_textFont[sprPos]);
-                offsetX += spr_textFont[sprPos].size.x + spaceLetter;
+                engine->renderer.renderer2D.render(spr_Font);
+                offsetX += spr_Font.size.x + spaceLetter;
             }else{ offsetX += 12 + spaceLetter; }
         }
 
